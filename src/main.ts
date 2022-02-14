@@ -1,30 +1,36 @@
-import * as PIXI from "pixi.js";
-import { Container } from "pixi.js";
+import * as PIXI from 'pixi.js'
+
+
+
+let graphics: PIXI.Graphics;
+
+
+const load = (app: PIXI.Application) => {
+    return new Promise<void>((resolve) => {
+        app.loader.add('assets/hello-world.png').load(() => {
+            resolve();
+        });
+    });
+};
 
 const main = async () => {
-    const app = new PIXI.Application(); 
-    document.body.appendChild(app.view);
-  
+    // Actual app
+    let app = new PIXI.Application({antialias: true, backgroundColor: 0xE6C99D});
+
+    // Display application properly
     document.body.style.margin = '0';
     app.renderer.view.style.position = 'absolute';
     app.renderer.view.style.display = 'block';
+
+    // View size = windows
     app.renderer.resize(window.innerWidth, window.innerHeight);
 
-    let container = new PIXI.Container();
-    app.stage.addChild(container) ;
-    
-    let rect = new PIXI.Graphics();
-    rect.beginFill(0xE6C99D);
-    rect.drawRect(0,0,screen.width,screen.height);
-    app.stage.addChild(rect);
+    // Load assets
+    await load(app);
 
     let hours = new Date().getHours();
     let minutes = new Date().getMinutes();
     let seconds = new Date().getSeconds(); 
-
-    let secondsContainer = new Container();
-    let minutesContainer = new Container(); 
-    let hoursContainer = new Container();
 
     let colorArr = [0x92aac7, 0xed5752, 0xa1be95, 0xe2dfa2];
     let yPos = screen.height/2;
@@ -35,15 +41,8 @@ const main = async () => {
     let minRad = 100;
     let hrRad = 100;
     let color = 0;
-   
 
-    app.stage.addChild(secondsContainer);
-    app.stage.addChild(minutesContainer);
-    app.stage.addChild(hoursContainer);
-
- 
-
-    while (seconds < 59){
+    if (seconds%1 == 0){
         let circle = new PIXI.Graphics();
         circle.beginFill(colorArr[color]);
         if (color > colorArr.length-1){
@@ -52,17 +51,58 @@ const main = async () => {
         else{
             color+=1
         }
-        circle.drawCircle(xPos1,yPos,secondsRad);
+        circle.drawCircle(600,yPos,secondsRad);
         app.stage.addChild(circle);
         secondsRad -=3;
     }
-   
+
+    if (hours%1 == 0){
+        let circle = new PIXI.Graphics();
+        circle.beginFill(colorArr[color]);
+        if (color > colorArr.length-1){
+            color = 0 
+        }
+        else{
+            color+=1
+        }
+        circle.drawCircle(xPos2,yPos,hrRad);
+        app.stage.addChild(circle);
+        secondsRad -=3;
+        console.log(seconds);
+
+    }
+
+    if (minutes%1 == 0){
+        let circle = new PIXI.Graphics();
+        circle.beginFill(colorArr[color]);
+        if (color > colorArr.length-1){
+            color = 0 
+        }
+        else{
+            color+=1
+        }
+        circle.drawCircle(xPos1,yPos,minRad);
+        app.stage.addChild(circle);
+        minRad -=3;
+        console.log(seconds);
+    }
+
+
+
+    // Handle window resizing
     window.addEventListener('resize', (_e) => {
         app.renderer.resize(window.innerWidth, window.innerHeight);
-        container.x = window.innerWidth/2;
-        container.y = window.innerHeight/2;
+        // sprite.x = window.innerWidth / 2 - sprite.width / 2;
+        // sprite.y = window.innerHeight / 2 - sprite.height / 2;
     });
-  
+
     document.body.appendChild(app.view);
-}
+
+
+};
+
+// Cannot be an arrow function. Arrow functions cannot have a 'this' parameter.
+
+
 main();
+
