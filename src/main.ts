@@ -34,12 +34,12 @@ const main = async () => {
 
     let colorArr = [0x92aac7, 0xed5752, 0xa1be95, 0xe2dfa2];
     let yPos = screen.height/2;
-    let xPos1 = screen.width/5;
+    let xPos1 = screen.width/4;
     let xPos2 = xPos1+xPos1;
     let xPos3 = xPos2+xPos1;
-    let secondsRad = 200;
-    let minRad = 200;
-    let hrRad = 200;
+    let secondsRad = 300;
+    let minRad = 300;
+    let hrRad = 300;
     let color = 0;
     let hrCtr = 1;
     let secCrt = 1; 
@@ -60,7 +60,7 @@ const main = async () => {
         app.stage.addChild(circle);
         secondsRad -=5;
         secCrt +=1;
-        if (secCrt == seconds){
+        if (secCrt > seconds){
             break;
         }
     }
@@ -80,7 +80,7 @@ const main = async () => {
         console.log(minutes);
         minCrt+=1;
 
-        if (minCrt == minutes){
+        if (minCrt > minutes){
             break;
         }
 
@@ -97,11 +97,11 @@ const main = async () => {
         }
         circle.drawCircle(xPos1,yPos,hrRad);
         app.stage.addChild(circle);
-        hrRad -=5;
+        hrRad -=20;
         console.log(hours);
         hrCtr+=1;
 
-        if (hrCtr == hours){
+        if (hrCtr > hours){
             break
         }
     }
