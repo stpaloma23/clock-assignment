@@ -37,42 +37,56 @@ const main = async () => {
     let xPos1 = screen.width/5;
     let xPos2 = xPos1+xPos1;
     let xPos3 = xPos2+xPos1;
-    let secondsRad = 100;
-    let minRad = 100;
-    let hrRad = 100;
+    let secondsRad = 200;
+    let minRad = 200;
+    let hrRad = 200;
     let color = 0;
-
-    if (seconds%1 == 0){
+    let hrCtr = 1;
+    let secCrt = 1; 
+    let minCrt = 1;
+    let secBool = true; 
+    let minBool = true; 
+    let hrBool = true; 
+    while(secBool){
         let circle = new PIXI.Graphics();
         circle.beginFill(colorArr[color]);
         if (color > colorArr.length-1){
-            color = 0 
+            color = 0 ;
         }
         else{
-            color+=1
+            color+=1;
         }
-        circle.drawCircle(600,yPos,secondsRad);
+        circle.drawCircle(xPos3,yPos,secondsRad);
         app.stage.addChild(circle);
-        secondsRad -=3;
+        secondsRad -=5;
+        secCrt +=1;
+        if (secCrt == seconds){
+            break;
+        }
     }
 
-    if (hours%1 == 0){
+    while(minBool){
         let circle = new PIXI.Graphics();
         circle.beginFill(colorArr[color]);
         if (color > colorArr.length-1){
-            color = 0 
+            color = 0 ;
         }
         else{
-            color+=1
+            color+=1;
         }
-        circle.drawCircle(xPos2,yPos,hrRad);
+        circle.drawCircle(xPos2,yPos,minRad);
         app.stage.addChild(circle);
-        secondsRad -=3;
-        console.log(seconds);
+        minRad -=5;
+        console.log(minutes);
+        minCrt+=1;
+
+        if (minCrt == minutes){
+            break;
+        }
 
     }
 
-    if (minutes%1 == 0){
+    while (hrBool) {
         let circle = new PIXI.Graphics();
         circle.beginFill(colorArr[color]);
         if (color > colorArr.length-1){
@@ -81,10 +95,15 @@ const main = async () => {
         else{
             color+=1
         }
-        circle.drawCircle(xPos1,yPos,minRad);
+        circle.drawCircle(xPos1,yPos,hrRad);
         app.stage.addChild(circle);
-        minRad -=3;
-        console.log(seconds);
+        hrRad -=5;
+        console.log(hours);
+        hrCtr+=1;
+
+        if (hrCtr == hours){
+            break
+        }
     }
 
 
